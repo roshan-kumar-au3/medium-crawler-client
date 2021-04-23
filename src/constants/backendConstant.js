@@ -1,0 +1,1 @@
+export const baseUrl = `https://crawl-medium.herokuapp.com/api`;
