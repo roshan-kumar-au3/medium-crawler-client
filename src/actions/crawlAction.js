@@ -1,6 +1,7 @@
 import { errorActionTypes } from "../constants/errorConstant";
 import { crawlActionTypes } from "../constants/searchConstant"
 import crawlService from "../services/crawlService";
+import searchActions from "./searchAction";
 
 
 const crawlMedium = (searchTag) => {
@@ -15,6 +16,7 @@ const crawlMedium = (searchTag) => {
         try {
             const response = await crawlService.crawlMedium(token, user.id, searchTag);
             dispatch(success(response.data));
+            dispatch(searchActions.getSearchHistoryById());
         } catch (e) {
             console.log(e);
             const error = {};

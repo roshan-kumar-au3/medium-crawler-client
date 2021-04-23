@@ -1,4 +1,4 @@
-import { crawlActionTypes } from "../../constants/searchConstant";
+import { crawlActionTypes, searchActionTypes } from "../../constants/searchConstant";
 
 let initState = {
     searchHistoryStatus: {},
@@ -26,6 +26,28 @@ const searchReducer = (state = initState, action) =>{
             return {
                 ...state,
                 searchDataByTagStatus: {
+                    isLoading: false,
+                }
+            }
+        case searchActionTypes.GET_SEARCH_HISTORY_REQUEST:
+            return {
+                ...state,
+                searchHistoryStatus: {
+                    isLoading: true,
+                }
+            }
+        case searchActionTypes.GET_SEARCH_HISTORY_SUCCESS:
+            return {
+                ...state,
+                searchHistoryStatus: {
+                    isLoading: false,
+                    searchHistoryData: action.payload,
+                }
+            }
+        case searchActionTypes.GET_SEARCH_HISTORY_FAILURE:
+            return {
+                ...state,
+                searchHistoryStatus: {
                     isLoading: false,
                 }
             }

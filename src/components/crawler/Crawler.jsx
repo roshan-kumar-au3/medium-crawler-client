@@ -1,27 +1,32 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import crawlActions from '../../actions/crawlAction';
 import errorActions from '../../actions/errorAction';
+import searchActions from '../../actions/searchAction';
 import MediumCard from '../mediumCard/MediumCard';
 
 const Crawler = (props) => {
     const [searchTag, setSearchTag] = useState('');
-    const { crawlMedium, search, resetError } = props;
-    const { searchDataByTagStatus } = search
-// search.searchDataByTagStatus.isLoading
+    const { crawlMedium, search, resetError, getSearchHistoryById } = props;
+    const { searchDataByTagStatus, searchHistoryStatus } = search;
+
+    useEffect(() => {
+        getSearchHistoryById();
+    }, []);
+
     const handleSearch = (e) => {
         e.preventDefault();
         resetError();
         console.log(searchTag);
-        const newSearchTag = searchTag.toLowerCase().replace(/\s+/g, '-').toLowerCase();
+        const newSearchTag = searchTag.replace(/\s+/g, '-').toLowerCase();
         console.log({ newSearchTag });
-        crawlMedium(searchTag)
+        crawlMedium(searchTag);
     }
     
     return (
         <>
         <div className="row">
-            <div className="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 mx-auto mt-5">
+            <div className="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 mx-auto mt-2">
                 <h3 className="text-right mt-5 mb-5">Welcome to Medium Crawler</h3>
                 <form>
                     <div className="form-group">
@@ -32,6 +37,19 @@ const Crawler = (props) => {
                     </div>
                     <button type="submit" disabled={searchDataByTagStatus.isLoading} className="btn btn-primary btn-lg" onClick={handleSearch}>Submit</button>
                 </form>
+            </div>
+        </div>
+        <div className="row">
+            <div className="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 mx-auto mt-3">
+                {
+                    !searchHistoryStatus.isLoading
+                    && searchHistoryStatus.searchHistoryData
+                    && searchHistoryStatus.searchHistoryData.map(topics => {
+                        return (
+                            <span key={topics} className="badge badge-success mr-2">{topics}</span>
+                        )
+                    })
+                }
             </div>
         </div>
         <div className="row">
@@ -72,7 +90,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     crawlMedium: (searchTag) => { dispatch(crawlActions.crawlMedium(searchTag)); },
-    resetError: () => { dispatch(errorActions.resetError()); }
+    resetError: () => { dispatch(errorActions.resetError()); },
+    getSearchHistoryById: () => { dispatch(searchActions.getSearchHistoryById()); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Crawler)
