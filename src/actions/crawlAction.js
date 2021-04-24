@@ -21,7 +21,8 @@ const crawlMedium = (searchTag) => {
             console.log(e);
             const error = {};
             error.message = e.response?.data?.error;
-            error.statusCode = e.response?.status
+            error.statusCode = e.response?.status;
+            dispatch(searchActions.getSearchHistoryById());
             dispatch(failure());
             dispatch(setError(error));
         }

@@ -20,9 +20,11 @@ const Crawler = (props) => {
         e.preventDefault();
         resetError();
         console.log(searchTag);
-        const newSearchTag = searchTag.replace(/\s+/g, '-').toLowerCase();
-        console.log({ newSearchTag });
-        crawlMedium(searchTag);
+        if (searchTag.length > 0) {
+            const newSearchTag = searchTag.replace(/\s+/g, '-').toLowerCase();
+            console.log({ newSearchTag });
+            crawlMedium(searchTag);           
+        }
     }
 
     const handleLogout = () => {
@@ -44,10 +46,10 @@ const Crawler = (props) => {
                     <div className="form-group">
                         <label htmlFor="exampleInputEmail1">Enter topics</label>
                         <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" 
-                        onChange={(e) => { setSearchTag(e.target.value); } } 
+                        onChange={(e) => { setSearchTag(e.target.value); resetError(); } } 
                         required/>
                     </div>
-                    <button type="submit" disabled={searchDataByTagStatus.isLoading} className="btn btn-primary btn-lg" onClick={handleSearch}>Submit</button>
+                    <button type="submit" disabled={searchDataByTagStatus.isLoading || searchTag.length === 0} className="btn btn-primary btn-lg" onClick={handleSearch}>Submit</button>
                 </form>
             </div>
         </div>
