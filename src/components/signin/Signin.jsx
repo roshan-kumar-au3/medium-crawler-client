@@ -15,6 +15,11 @@ function Signin(props) {
         loginAdmin(email, password);
     }
 
+    const handleToggle = (e) => {
+        const { toggleForm } = props;
+        toggleForm();
+    }
+
 
     return (
         <div className="row">
@@ -33,7 +38,8 @@ function Signin(props) {
                         onChange={(e) => { setPassword(e.target.value); resetError(); }}
                         />
                     </div>
-                    <button type="submit" disabled={auth.isLoading} className="btn btn-primary btn-lg" onClick={handleLoginAdmin}>Submit</button>
+                    <button type="submit" disabled={auth.isLoading} className="btn btn-primary btn-lg mr-3" onClick={handleLoginAdmin}>Submit</button>
+                    <button type="button" className="btn btn-light btn-lg" onClick={handleToggle}>Signup</button>
                 </form>
             </div>
         </div>
@@ -49,7 +55,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     loginAdmin: (email, password) => { dispatch(authActions.loginAdmin(email, password)); },
-    resetError: () => { dispatch(errorActions.resetError()); }
+    resetError: () => { dispatch(errorActions.resetError()); },
+    toggleForm: () => { dispatch(authActions.toggleLoginForm()); },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signin);

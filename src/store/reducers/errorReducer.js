@@ -1,4 +1,5 @@
 import { errorActionTypes } from "../../constants/errorConstant";
+import { authActionTypes } from "../../constants/searchConstant";
 
 let initState = {
     isSet: false,
@@ -15,6 +16,12 @@ const errorReducer = (state = initState, action) =>{
                 statusCode: action.error?.statusCode,
             }
         case errorActionTypes.RESET_ERROR:
+            return {
+                isSet: false,
+                message: '',
+                statusCode: null
+            }
+        case authActionTypes.LOGOUT:
             return {
                 isSet: false,
                 message: '',

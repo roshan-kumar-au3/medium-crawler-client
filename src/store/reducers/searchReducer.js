@@ -1,4 +1,4 @@
-import { crawlActionTypes, searchActionTypes } from "../../constants/searchConstant";
+import { authActionTypes, crawlActionTypes, searchActionTypes } from "../../constants/searchConstant";
 
 let initState = {
     searchHistoryStatus: {},
@@ -50,6 +50,11 @@ const searchReducer = (state = initState, action) =>{
                 searchHistoryStatus: {
                     isLoading: false,
                 }
+            }
+        case authActionTypes.LOGOUT:
+            return {
+                searchHistoryStatus: {},
+                searchDataByTagStatus: {},
             }
         default:
             return state

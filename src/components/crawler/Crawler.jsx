@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import authActions from '../../actions/authAction';
 import crawlActions from '../../actions/crawlAction';
 import errorActions from '../../actions/errorAction';
 import searchActions from '../../actions/searchAction';
@@ -7,11 +8,12 @@ import MediumCard from '../mediumCard/MediumCard';
 
 const Crawler = (props) => {
     const [searchTag, setSearchTag] = useState('');
-    const { crawlMedium, search, resetError, getSearchHistoryById } = props;
+    const { crawlMedium, search, resetError, getSearchHistoryById, logout } = props;
     const { searchDataByTagStatus, searchHistoryStatus } = search;
 
     useEffect(() => {
         getSearchHistoryById();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleSearch = (e) => {
@@ -22,9 +24,19 @@ const Crawler = (props) => {
         console.log({ newSearchTag });
         crawlMedium(searchTag);
     }
+
+    const handleLogout = () => {
+        logout();
+    }
     
     return (
         <>
+        <div onClick={handleLogout} style={{ cursor: 'pointer' }}>
+            <span className="badge badge-danger m-2" 
+            style={{ 
+                height: '30px', alignItems: 'center', display: 'flex', width: '120px'
+            }}>Logout</span>
+        </div>
         <div className="row">
             <div className="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 mx-auto mt-2">
                 <h3 className="text-right mt-5 mb-5">Welcome to Medium Crawler</h3>
@@ -91,7 +103,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
     crawlMedium: (searchTag) => { dispatch(crawlActions.crawlMedium(searchTag)); },
     resetError: () => { dispatch(errorActions.resetError()); },
-    getSearchHistoryById: () => { dispatch(searchActions.getSearchHistoryById()); }
+    getSearchHistoryById: () => { dispatch(searchActions.getSearchHistoryById()); },
+    logout: () => { dispatch(authActions.logout()); },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Crawler)

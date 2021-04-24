@@ -3,6 +3,7 @@ import { authActionTypes } from "../../constants/searchConstant";
 let initState = {
     isLoggedIn: false,
     isLoading: false,
+    showLogin: true,
 }
 
 const authReducer = (state = initState, action) =>{
@@ -25,6 +26,33 @@ const authReducer = (state = initState, action) =>{
                 ...state,
                 isLoggedIn: false,
                 isLoading: false,
+            }
+        case authActionTypes.SEND_SIGNUP_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case authActionTypes.SEND_SIGNUP_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                accountCreated: true
+            }
+        case authActionTypes.SEND_SIGNUP_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+            }
+        case authActionTypes.TOGGLE_SHOW_LOGIN_FORM:
+            return {
+                ...state,
+                showLogin: !state.showLogin,
+            }
+        case authActionTypes.LOGOUT:
+            return {
+                isLoggedIn: false,
+                isLoading: false,
+                showLogin: true,
             }
         default:
             return state
