@@ -22,6 +22,9 @@ const crawlMedium = (searchTag) => {
             const error = {};
             error.message = e.response?.data?.error;
             error.statusCode = e.response?.status;
+            if (e.response?.data?.similarWordsData) {
+                error.similarWordsData = e.response?.data?.similarWordsData;
+            }
             dispatch(searchActions.getSearchHistoryById());
             dispatch(failure());
             dispatch(setError(error));

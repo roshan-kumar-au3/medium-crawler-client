@@ -10,10 +10,19 @@ let initState = {
 const errorReducer = (state = initState, action) =>{
     switch (action.type) {
         case errorActionTypes.SET_ERROR:
-            return {
-                isSet: true,
-                message: action.error ? action.error.message : 'NO INTERNET',
-                statusCode: action.error?.statusCode,
+            if (action.error && action.error.similarWordsData) {
+                return {
+                    isSet: true,
+                    message: action.error ? action.error.message : 'NO INTERNET',
+                    statusCode: action.error?.statusCode,
+                    similarWordsData: action.error.similarWordsData
+                }          
+            } else {
+                return {
+                    isSet: true,
+                    message: action.error ? action.error.message : 'NO INTERNET',
+                    statusCode: action.error?.statusCode,
+                }          
             }
         case errorActionTypes.RESET_ERROR:
             return {

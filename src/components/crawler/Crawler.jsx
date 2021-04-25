@@ -8,7 +8,7 @@ import MediumCard from '../mediumCard/MediumCard';
 
 const Crawler = (props) => {
     const [searchTag, setSearchTag] = useState('');
-    const { crawlMedium, search, resetError, getSearchHistoryById, logout } = props;
+    const { crawlMedium, search, resetError, getSearchHistoryById, logout, error } = props;
     const { searchDataByTagStatus, searchHistoryStatus } = search;
 
     useEffect(() => {
@@ -29,6 +29,14 @@ const Crawler = (props) => {
 
     const handleLogout = () => {
         logout();
+    }
+
+    const getSimilarWords = () => {
+        return error?.similarWordsData?.[0]?.meanings[0]?.definitions[0]?.synonyms ?? false;
+    }
+
+    const noSimilarWordsAvailabel = () => {
+        return error?.similarWordsData?.[0]?.meanings[0]?.definitions?.[0] && !error.similarWordsData[0].meanings[0].definitions[0].synonyms ? true : false
     }
     
     return (
@@ -53,8 +61,33 @@ const Crawler = (props) => {
                 </form>
             </div>
         </div>
+        {  
+            getSimilarWords() &&
+                    <div className="row">
+                        <div className="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 mx-auto mt-3">
+                        <h4>Similar Words suggestion</h4>
+                            {
+                                getSimilarWords().map(words => {
+                                    return (
+                                        <span key={words} className="badge badge-primary mr-2">{words}</span>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+        }
+        {  
+            noSimilarWordsAvailabel() &&
+                    <div className="row">
+                        <div className="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 mx-auto mt-3">
+                        <h4>Similar Words suggestion</h4>
+                            <span className="badge badge-danger mr-2"> Oops! No similar word Suggestion</span>
+                        </div>
+                    </div>
+        }
         <div className="row">
             <div className="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 mx-auto mt-3">
+                <h4>Search History</h4>
                 {
                     !searchHistoryStatus.isLoading
                     && searchHistoryStatus.searchHistoryData
@@ -95,10 +128,11 @@ const Crawler = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    const { auth, search } = state;
+    const { auth, search, error } = state;
     return {
         auth,
-        search
+        search,
+        error,
     }
 };
 
