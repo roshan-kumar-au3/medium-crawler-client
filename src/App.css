@@ -8,4 +8,54 @@ h4 {
   color: #747474;
 }
 
+.btn-primary {
+  background-color: #0018ff !important;
+  border-color: #0018ff !important;
+}
 
+.badge-success {
+  color: #000 !important;
+  background-color: #92eca7 !important;
+}
+
+.btn:disabled {
+  color: rgb(255, 255, 255) !important;
+  opacity: .3;
+  background-color: #92eca7 !important;
+}
+
+.badge-primary {
+  color: #000 !important;
+  background-color: rgb(0 123 255 / 50%) !important;
+}
+
+.form-control:focus {
+  color: #000000 !important;
+  background-color: rgb(219, 219, 219);
+  border-color: #037afa;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+}
+
+.card-title {
+  color: #000;
+  font-size: x-large;
+}
+
+.card-body {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+  background-color: lightyellow;
+}
+
+.card {
+  background-color: lightslategrey !important;
+  border: 2px solid rgba(0,0,0,.125) !important;
+  border-radius: 1rem !important;
+}
+
+.row {
+  margin-bottom: 10px !important;
+}
