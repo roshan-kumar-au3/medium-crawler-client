@@ -116,8 +116,13 @@ const Crawler = (props) => {
                     && searchDataByTagStatus.searchData.crawlData 
                     && searchDataByTagStatus.searchData.crawlData.map(item => {
                         return (
-                            <MediumCard key={item.title} title={item.title} description={item.description} author={item.author}
-                            link={item.link} readInfo={item.readInfo} />
+                            <MediumCard
+                            key={item.title}
+                            title={item.title}
+                            description={item.description}
+                            author={item.author}
+                            link={item.link} readInfo={item.readInfo} 
+                            />
                         )
                     })
                 }

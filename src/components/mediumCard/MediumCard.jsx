@@ -24,7 +24,7 @@ const MediumCard = (props) => {
                             }
                             {
                                 author && (
-                                    <h6 className="card-subtitle mb-2 text-success">{readInfo}</h6>
+                                    <h6 className="card-subtitle mb-2 text-success">{author}</h6>
                                 )
                             }
                     </div>
