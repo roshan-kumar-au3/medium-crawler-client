@@ -34,7 +34,7 @@ const MediumCard = (props) => {
                                 tags.map((item) => {
                                     return (
                                         <a href={item.tagLink}>
-                                            <span className="badge badge-primary mr-2" style={{
+                                            <span className="badge badge-primary mr-2 mb-2" style={{
                                                 height: '30px',
                                                 paddingTop: '8px'
                                             }}>#{item.tagName}</span>
