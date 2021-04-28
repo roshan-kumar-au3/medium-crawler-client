@@ -47,13 +47,23 @@ h4 {
   flex: 1 1 auto;
   min-height: 1px;
   padding: 1.25rem;
-  background-color: lightyellow;
+  background-color: transparent;
 }
 
 .card {
-  background-color: lightslategrey !important;
+  background-color: lightyellow !important;
   border: 2px solid rgba(0,0,0,.125) !important;
   border-radius: 1rem !important;
+}
+
+.card:hover {
+  background-color: rgb(255, 255, 255) !important;
+  border: 2px solid rgba(0,0,0,.125) !important;
+  border-radius: 1rem !important;
+}
+
+.author {
+  text-transform: capitalize;
 }
 
 .row {

@@ -18,7 +18,9 @@ const Crawler = (props) => {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        resetError();
+        if (error.isSet) {
+            resetError();   
+        }
         console.log(searchTag);
         if (searchTag.length > 0) {
             const newSearchTag = searchTag.replace(/\s+/g, '-').toLowerCase();
@@ -38,6 +40,13 @@ const Crawler = (props) => {
     const noSimilarWordsAvailabel = () => {
         return error?.similarWordsData?.[0]?.meanings[0]?.definitions?.[0] && !error.similarWordsData[0].meanings[0].definitions[0].synonyms ? true : false
     }
+
+    const handleChange = (e) => {
+        setSearchTag(e.target.value); 
+        if (error.isSet) {
+            resetError();
+        }
+    }
     
     return (
         <>
@@ -53,8 +62,8 @@ const Crawler = (props) => {
                 <form>
                     <div className="form-group">
                         <label htmlFor="exampleInputEmail1">Enter topics</label>
-                        <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" 
-                        onChange={(e) => { setSearchTag(e.target.value); resetError(); } } 
+                        <input type="text" className="form-control" id="search" aria-describedby="search" 
+                        onChange={handleChange} 
                         required/>
                     </div>
                     <button type="submit" disabled={searchDataByTagStatus.isLoading || searchTag.length === 0} className="btn btn-primary btn-lg" onClick={handleSearch}>Submit</button>
@@ -121,7 +130,8 @@ const Crawler = (props) => {
                             title={item.title}
                             description={item.description}
                             author={item.author}
-                            link={item.link} readInfo={item.readInfo} 
+                            link={item.link} readInfo={item.readInfo}
+                            tags={item.tags}
                             />
                         )
                     })
